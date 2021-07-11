@@ -20,7 +20,7 @@ weight = st.sidebar.slider('■体重（kg）', 20, 150, 50)
 SCr = st.sidebar.slider('■SCr', 0.00, 2.50, 0.60)
 
 st.sidebar.title('設定値')
-dose = st.sidebar.selectbox('■投与量（mg）', list((250, 500, 750, 1000, 1500, 2000, 2500, 3000, 3500, 4000)), index=3)
+dose = st.sidebar.selectbox('■投与量（mg）', list((250, 500, 750, 1000, 1500, 2000, 2500, 3000, 3500, 4000)), index=5)
 tau = st.sidebar.selectbox('■投与間隔（hr）', list((6, 8, 12, 24, 48)), index=3)
 
 
@@ -86,15 +86,15 @@ Ctrough = ((dose/Vd)/(1-math.exp(-kel*tau)))*math.exp(-kel*tau)
 
 
 st.title('VCMパラメータ Fitting')
-#f_Vd = st.slider('Vd', 0, 150, 60)
-#f_kel = st.slider('kel', 0.000, 0.200, 0.100, step=0.001)
-f_Vd = st.number_input('Vd', 1.0, 150.0, Vd)
-f_kel = st.number_input('kel  *小数点第3位以下の数字も計算には反映されます', 0.000, 2.000, kel)
+f_Vd = st.slider('Vd', 0.0, 150.0, Vd)
+f_kel = st.slider('kel（x 10^-3）', 0, 1000, int(kel*1000))
+#f_Vd = st.number_input('Vd', 1.0, 150.0, Vd)
+#f_kel = st.number_input('kel  *小数点第3位以下の数字も計算には反映されます', 0.000, 2.000, kel)
 
 
-f_CLvcm = f_Vd * f_kel
+f_CLvcm = f_Vd * (f_kel/1000)
 'CLvcm (L/hr) = ', round(f_CLvcm, 2)
-f_t_half = math.log(2) / f_kel
+f_t_half = math.log(2) / (f_kel/1000)
 't1/2 (/hr) = ', round(f_t_half, 1)
-f_Ctrough = ((dose/f_Vd)/(1-math.exp(-f_kel*tau)))*math.exp(-f_kel*tau)
+f_Ctrough = ((dose/f_Vd)/(1-math.exp(-(f_kel/1000)*tau)))*math.exp(-(f_kel/1000)*tau)
 'Ctrough (mg/L) = ', round(f_Ctrough, 2)
