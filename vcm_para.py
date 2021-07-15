@@ -10,7 +10,10 @@ global dose
 global tau
 
 st.title('VCMパラメータ計算')
-
+"""
+### 1-コンパートメントモデルを用いてトラフ値およびAUCを計算します。
+### 当サイトのご利用は自己責任でお願いします。
+"""
 #st.sidebar.title('')
 st.sidebar.title('基本情報')
 age = st.sidebar.slider('■年齢', 0, 100, 60)
@@ -36,7 +39,7 @@ BMI = cal_BMI(height, weight)
 
 if BMI >25:
     adj_BW = 25 * (height/100)**2
-    comment = f'  ※補正体重 {round(adj_BW, 1)} (kg)を使用'
+    comment = f'  ※補正体重 {round(adj_BW, 1)} (kg)を使用してください'
 else:
     comment = ''
 'BMI = ', round(BMI, 2), comment
