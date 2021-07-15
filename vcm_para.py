@@ -90,7 +90,7 @@ AUC = dose/CLvcm
 
 
 st.title('VCMパラメータ Fitting')
-f_Vd = st.slider('Vd', 0.0, 150.0, Vd)
+f_Vd = st.slider('Vd', 0.0, 150.0, round(Vd, 1))
 f_kel = st.slider('kel（x 0.001）', 0, 1000, int(kel*1000))
 #f_Vd = st.number_input('Vd', 1.0, 150.0, Vd)
 #f_kel = st.number_input('kel  *小数点第3位以下の数字も計算には反映されます', 0.000, 2.000, kel)
