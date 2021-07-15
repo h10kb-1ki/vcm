@@ -21,9 +21,10 @@ SCr = st.sidebar.slider('■SCr', 0.00, 2.50, 0.60)
 
 st.sidebar.title('設定値')
 #dose = st.sidebar.selectbox('■投与量（mg）', list((250, 500, 750, 1000, 1500, 2000, 2500, 3000, 3500, 4000)), index=5)
-dose = st.sidebar.number_input('■投与量（mg）', 1)
-tau = st.sidebar.selectbox('■投与間隔（hr）', list((6, 8, 12, 24, 48)), index=3)
-
+#dose = st.sidebar.number_input('■投与量（mg）', 1)
+dose = st.sidebar.slider('■投与量（mg）', 250, 4000, 2000, step=250)
+#tau = st.sidebar.selectbox('■投与間隔（hr）', list((6, 8, 12, 24, 48)), index=3)
+tau = st.sidebar.radio('■投与間隔（hr）', (6, 8, 12, 24, 48), index=3)
 
 """
 ## ―体格―
