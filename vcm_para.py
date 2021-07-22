@@ -20,7 +20,7 @@ age = st.sidebar.slider('■年齢', 0, 100, 60)
 gen = st.sidebar.radio('■性別', ('M', 'F'), index=0)
 height = st.sidebar.slider('■身長（cm）', 120, 200, 160)
 weight = st.sidebar.slider('■体重（kg）', 20, 150, 50)
-SCr = st.sidebar.slider('■SCr', 0.00, 2.50, 0.60)
+SCr = st.sidebar.slider('■SCr', 0.00, 2.50, 0.70)
 
 st.sidebar.title('設定値')
 dose_select = st.sidebar.radio('投与量の入力方法', ('選択', '任意'), index=0)
