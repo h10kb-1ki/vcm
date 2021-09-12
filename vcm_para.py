@@ -1,5 +1,7 @@
 import streamlit as st
 import math
+import pandas as pd
+import matplotlib.pyplot as plt
 
 global age
 global gen
@@ -118,10 +120,56 @@ f_Ctrough = ((dose/f_Vd)/(1-math.exp(-(f_kel/1000)*tau)))*math.exp(-(f_kel/1000)
 f_AUC = dose/f_CLvcm *24/tau
 'AUC (mg・hr/L) = ', round(f_AUC, 1)
 
+#----------------------------------------------------------------グラフ化↓
+time = list(range(0, 120, 1))
+C1 = []
+for t in time:
+    conc = (dose/f_Vd)*math.exp(-(f_kel/1000)*t)
+    C1.append(conc)
+
+df = pd.DataFrame({'time':time, 'C1':C1})
+df = df.set_index('time')
+df['C2'] = df['C1'].shift(tau)
+df['C3'] = df['C1'].shift(tau*2)
+df['C4'] = df['C1'].shift(tau*3)
+df['C5'] = df['C1'].shift(tau*4)
+df['C6'] = df['C1'].shift(tau*5)
+df['C7'] = df['C1'].shift(tau*6)
+df['C8'] = df['C1'].shift(tau*7)
+df['C9'] = df['C1'].shift(tau*8)
+df['C10'] = df['C1'].shift(tau*9)
+df['C11'] = df['C1'].shift(tau*10)
+df['C12'] = df['C1'].shift(tau*11)
+df['C13'] = df['C1'].shift(tau*12)
+df['C14'] = df['C1'].shift(tau*13)
+df['C15'] = df['C1'].shift(tau*14)
+df = df.fillna(0)
+C = df.sum(axis='columns')
+
+fig = plt.figure(figsize=(9, 6))
+ax = fig.add_subplot(1,1,1)
+
+ax.set_ylim([0, 100])
+ax.set_xlim([0, 120])
+
+start, end = ax.get_xlim()
+stepsize=24
+ax.xaxis.set_ticks(pd.np.arange(start, end, stepsize))
+
+ax.plot(time, C, linewidth=2, color='darkturquoise')
+plt.xlabel('Time (hr)', fontsize=18)
+plt.ylabel('Concentration (mg/L)', fontsize=18)
+
+graph_display = st.checkbox('グラフ1を表示')
+if graph_display == True:
+    #st.write(df)
+    st.pyplot(fig)
+#----------------------------------------------------------------グラフ化↑
+
 """
 # 
 """
-S2_display = st.checkbox('表示する')
+S2_display = st.checkbox('別の一手')
 if S2_display == True:
     """
     ## ―Simulation #2―
@@ -137,3 +185,67 @@ if S2_display == True:
     'Ctrough (mg/L) = ', round(f2_Ctrough, 2)
     f2_AUC = dose/f2_CLvcm *24/tau
     'AUC (mg・hr/L) = ', round(f2_AUC, 1)
+
+    #----------------------------------------------------------------グラフ化↓
+    Co1 = []
+    for t in time:
+        conc = (dose/f2_Vd)*math.exp(-(f2_kel/1000)*t)
+        Co1.append(conc)
+
+    df2 = pd.DataFrame({'time':time, 'Co1':Co1})
+    df2 = df2.set_index('time')
+    df2['Co2'] = df2['Co1'].shift(tau)
+    df2['Co3'] = df2['Co1'].shift(tau*2)
+    df2['Co4'] = df2['Co1'].shift(tau*3)
+    df2['Co5'] = df2['Co1'].shift(tau*4)
+    df2['Co6'] = df2['Co1'].shift(tau*5)
+    df2['Co7'] = df2['Co1'].shift(tau*6)
+    df2['Co8'] = df2['Co1'].shift(tau*7)
+    df2['Co9'] = df2['Co1'].shift(tau*8)
+    df2['Co10'] = df2['Co1'].shift(tau*9)
+    df2['Co11'] = df2['Co1'].shift(tau*10)
+    df2['Co12'] = df2['Co1'].shift(tau*11)
+    df2['Co13'] = df2['Co1'].shift(tau*12)
+    df2['Co14'] = df2['Co1'].shift(tau*13)
+    df2['Co15'] = df2['Co1'].shift(tau*14)
+    df2 = df2.fillna(0)
+    Con = df2.sum(axis='columns')
+
+    fig2 = plt.figure(figsize=(9, 6))
+    ax2 = fig2.add_subplot(1,1,1)
+
+    ax2.set_ylim([0, 100])
+    ax2.set_xlim([0, 120])
+
+    start, end = ax2.get_xlim()
+    stepsize=24
+    ax2.xaxis.set_ticks(pd.np.arange(start, end, stepsize))
+
+    ax2.plot(time, Con, linewidth=2, color='hotpink')
+    plt.xlabel('Time (hr)', fontsize=18)
+    plt.ylabel('Concentration (mg/L)', fontsize=18)
+
+    graph2_display = st.checkbox('グラフ2を表示')
+    if graph2_display == True:
+        #st.write(df)
+        st.pyplot(fig2)
+    #----------------------------------------------------------------グラフ化↑
+
+    grapg_merge = st.checkbox('グラフ1・2を重ねて表示')
+    if grapg_merge == True:
+        fig = plt.figure(figsize=(9, 6))
+        ax = fig.add_subplot(1,1,1)
+
+        ax.set_ylim([0, 100])
+        ax.set_xlim([0, 120])
+
+        start, end = ax.get_xlim()
+        stepsize=24
+        ax.xaxis.set_ticks(pd.np.arange(start, end, stepsize))
+
+        ax.plot(time, C, linewidth=2, color='darkturquoise')
+        ax.plot(time, Con, linewidth=2, color='hotpink')
+
+        plt.xlabel('Time (hr)', fontsize=18)
+        plt.ylabel('Concentration (mg/L)', fontsize=18)
+        st.pyplot(fig)
