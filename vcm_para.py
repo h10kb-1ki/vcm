@@ -236,7 +236,7 @@ if S2_display == True:
         fig = plt.figure(figsize=(9, 6))
         ax = fig.add_subplot(1,1,1)
 
-        ax.set_ylim([0, 100])
+        ax.set_ylim([0, 80])
         ax.set_xlim([0, 120])
 
         start, end = ax.get_xlim()
