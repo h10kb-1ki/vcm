@@ -149,7 +149,7 @@ C = df.sum(axis='columns')
 fig = plt.figure(figsize=(9, 6))
 ax = fig.add_subplot(1,1,1)
 
-ax.set_ylim([0, 100])
+ax.set_ylim([0, 80])
 ax.set_xlim([0, 120])
 
 start, end = ax.get_xlim()
@@ -214,7 +214,7 @@ if S2_display == True:
     fig2 = plt.figure(figsize=(9, 6))
     ax2 = fig2.add_subplot(1,1,1)
 
-    ax2.set_ylim([0, 100])
+    ax2.set_ylim([0, 80])
     ax2.set_xlim([0, 120])
 
     start, end = ax2.get_xlim()
